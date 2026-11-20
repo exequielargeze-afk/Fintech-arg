@@ -1,6 +1,12 @@
 import streamlit as st
 import requests
 
+# =========================================================================
+# 💰 TU PANEL DE CONTROL DE MONETIZACIÓN (Cambiá estos links cuando quieras)
+# =========================================================================
+LINK_INVITACION_BINGX = "https://bingxdao.com/referral-program/CISAPT?activityId=1641166226936946772" 
+# =========================================================================
+
 # 1. Configuración de la página y adaptación móvil
 st.set_page_config(page_title="RindePesos", page_icon="💸", layout="centered")
 
@@ -16,6 +22,9 @@ st.markdown("""
     .podio-3 { padding: 15px; border-radius: 10px; background-color: #fff7ed; margin-bottom: 12px; border-left: 6px solid #ea580c; }
     .card-normal { padding: 15px; border-radius: 10px; background-color: #ffffff; margin-bottom: 10px; border-left: 5px solid #bdc3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     
+    /* Bloque de Sponsor BingX */
+    .sponsor-card { padding: 20px; border-radius: 12px; background-color: #e0f2fe; margin-bottom: 20px; border: 2px dashed #0284c7; text-align: center; }
+    
     .card-title { font-size: 20px !important; font-weight: 800 !important; color: #111827 !important; display: inline-block; margin-bottom: 5px; }
     .badge-tasa { background-color: #e0f2fe; color: #0369a1; padding: 3px 8px; border-radius: 5px; font-weight: bold; font-size: 13px; }
     </style>
@@ -28,6 +37,23 @@ st.write("Descubrí qué cuenta te paga más hoy por tener tu plata guardada o a
 # 2. Entrada del usuario
 monto = st.number_input("¿Cuántos pesos querés simular?", min_value=1000, value=150000, step=10000, format="%d")
 
+# =========================================================================
+# 🔥 BLOQUE PUBLICITARIO DE BINGX (Genera tus ingresos extras)
+# =========================================================================
+st.markdown(f"""
+<div class="sponsor-card">
+    <h3 style="color: #0369a1; margin-top:0;">🚀 ¡PROMO DESTACADA DE LA SEMANA!</h3>
+    <p style="color: #1e293b; font-size: 16px;">¿Buscás rendimientos más altos? Create una cuenta en <b>BingX</b>, completá tu registro y empezá a operar con cripto.</p>
+    <p style="color: #0369a1; font-weight: bold; font-size: 18px;">🎁 ¡Bono de bienvenida exclusivo esperando por vos!</p>
+    <a href="{LINK_INVITACION_BINGX}" target="_blank" style="text-decoration:none;">
+        <button style="background-color: #0284c7; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size:16px;">
+            Crear Cuenta Gratis en BingX ↗
+        </button>
+    </a>
+</div>
+""", unsafe_allow_html=True)
+# =========================================================================
+
 # 3. Base de datos con mecanismo de Fallback (Tasas de mercado)
 datos_respaldo = [
     {"nombre": "Carrefour Banco", "tna": 20.00},
@@ -39,7 +65,6 @@ datos_respaldo = [
     {"nombre": "Mercado Pago", "tna": 17.90}
 ]
 
-# Tasa de referencia del Plazo Fijo bancario promedio actual en Argentina
 TNA_PLAZO_FIJO = 25.00  
 
 url = "https://dolarapi.com"
@@ -70,17 +95,14 @@ for b in datos_finales:
 
 ranking_ordenado = sorted(ranking, key=lambda x: x['tna'], reverse=True)
 
-# Cálculo comparativo con Plazo Fijo (Plata estancada a 30 días)
 ganancia_pf = (monto * (TNA_PLAZO_FIJO / 100)) / 12
 
-# 5. Muestra del Gancho de Ahorro y Comparador Bancario (Rutas corregidas)
 mejor_b = ranking_ordenado[0]['nombre']
 peor_b = ranking_ordenado[-1]
 diferencia_billeteras = ranking_ordenado[0]['ganancia'] - peor_b['ganancia']
 
 st.error(f"⚠️ **¡Ojo!** Si dejás tus pesos en la peor billetera en vez de usar **{mejor_b}**, estás perdiendo **${diferencia_billeteras:,.2f}** este mes.")
 
-# Bloque comparativo contra los bancos
 st.info(f"🏦 **Comparación con Plazo Fijo Bancario (TNA {TNA_PLAZO_FIJO}%):** Un plazo fijo te dejaría **${ganancia_pf:,.2f}** al mes, pero acordate de que **te congela la plata por 30 días**. ¡Las billeteras de abajo te pagan rindiendo día a día con tu plata libre!")
 
 # 6. Renderizar el Podio Visual y Ranking
@@ -89,7 +111,6 @@ st.write("### 🏆 Ranking de Cuentas Remuneradas")
 texto_compartir = f"💸 *RANKING DE RENDIMIENTOS HOY EN ARGENTINA*\nSimulación para: ${monto:,.2f}\n\n"
 
 for puesto, b in enumerate(ranking_ordenado, 1):
-    # Asignación de clases visuales según el puesto del podio
     if puesto == 1:
         clase_card = "podio-1"
         icono = "🥇"
@@ -103,7 +124,6 @@ for puesto, b in enumerate(ranking_ordenado, 1):
         clase_card = "card-normal"
         icono = "📱"
         
-    # Armamos la estructura de texto que se va a copiar para enviar por WhatsApp
     if puesto <= 5:
         texto_compartir += f"{icono} *Puesto #{puesto}: {b['nombre']}*\n👉 rinde: ${b['ganancia']:,.2f}/mes o ${b['ganancia_diaria']:,.2f}/día (TNA: {b['tna']}%)\n\n"
 
@@ -118,18 +138,17 @@ for puesto, b in enumerate(ranking_ordenado, 1):
         </div>
         """, unsafe_allow_html=True)
 
-texto_compartir += "Calculá tus ahorros gratis en: rindepesos.streamlit.app"
+texto_compartir += f"Calculá tus ahorros gratis en: fintech-arg-viwdwylf8ioykfdixxtcal.streamlit.app"
 
-# 7. Herramientas de Viralidad y Marketing
+# 7. Herramientas de Viralidad
 st.write("---")
 st.write("### 📢 ¡Compartí el dato con tu familia o amigos!")
 st.write("Tocá el botón de abajo para copiar un resumen listo para pegar en tus grupos de WhatsApp:")
 
-# Botón interactivo nativo de Streamlit para copiar al portapapeles
 st.code(texto_compartir, language="text")
 st.caption("💡 Mantené presionado o dale doble clic al cuadro gris de arriba para copiarlo al instante.")
 
-# 8. Captura de Emails para la Base de Clientes
+# 8. Captura de Emails
 st.write("---")
 st.write("### 🔔 Que no se te escapen las subas de tasas")
 email = st.text_input("Dejá tu correo electrónico y te mandamos una alerta automática apenas una billetera aumente sus ganancias:")
