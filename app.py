@@ -2,9 +2,9 @@ import streamlit as st
 import requests
 
 # =========================================================================
-# 💰 TU PANEL DE CONTROL DE MONETIZACIÓN (Cambiá estos links cuando quieras)
+# 💰 TU PANEL DE CONTROL DE MONETIZACIÓN (Poné tu link real acá)
 # =========================================================================
-LINK_INVITACION_BINGX = "https://bingxdao.com/referral-program/CISAPT?activityId=1641166226936946772" 
+LINK_INVITACION_BINGX = "https://bingx.com" 
 # =========================================================================
 
 # 1. Configuración de la página y adaptación móvil
@@ -23,7 +23,7 @@ st.markdown("""
     .card-normal { padding: 15px; border-radius: 10px; background-color: #ffffff; margin-bottom: 10px; border-left: 5px solid #bdc3c7; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     
     /* Bloque de Sponsor BingX */
-    .sponsor-card { padding: 20px; border-radius: 12px; background-color: #e0f2fe; margin-bottom: 20px; border: 2px dashed #0284c7; text-align: center; }
+    .sponsor-card { padding: 20px; border-radius: 12px; background-color: #e0f2fe; margin-top: 25px; margin-bottom: 25px; border: 2px dashed #0284c7; text-align: center; }
     
     .card-title { font-size: 20px !important; font-weight: 800 !important; color: #111827 !important; display: inline-block; margin-bottom: 5px; }
     .badge-tasa { background-color: #e0f2fe; color: #0369a1; padding: 3px 8px; border-radius: 5px; font-weight: bold; font-size: 13px; }
@@ -36,23 +36,6 @@ st.write("Descubrí qué cuenta te paga más hoy por tener tu plata guardada o a
 
 # 2. Entrada del usuario
 monto = st.number_input("¿Cuántos pesos querés simular?", min_value=1000, value=150000, step=10000, format="%d")
-
-# =========================================================================
-# 🔥 BLOQUE PUBLICITARIO DE BINGX (Genera tus ingresos extras)
-# =========================================================================
-st.markdown(f"""
-<div class="sponsor-card">
-    <h3 style="color: #0369a1; margin-top:0;">🚀 ¡PROMO DESTACADA DE LA SEMANA!</h3>
-    <p style="color: #1e293b; font-size: 16px;">¿Buscás rendimientos más altos? Create una cuenta en <b>BingX</b>, completá tu registro y empezá a operar con cripto.</p>
-    <p style="color: #0369a1; font-weight: bold; font-size: 18px;">🎁 ¡Bono de bienvenida exclusivo esperando por vos!</p>
-    <a href="{LINK_INVITACION_BINGX}" target="_blank" style="text-decoration:none;">
-        <button style="background-color: #0284c7; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size:16px;">
-            Crear Cuenta Gratis en BingX ↗
-        </button>
-    </a>
-</div>
-""", unsafe_allow_html=True)
-# =========================================================================
 
 # 3. Base de datos con mecanismo de Fallback (Tasas de mercado)
 datos_respaldo = [
@@ -105,7 +88,7 @@ st.error(f"⚠️ **¡Ojo!** Si dejás tus pesos en la peor billetera en vez de 
 
 st.info(f"🏦 **Comparación con Plazo Fijo Bancario (TNA {TNA_PLAZO_FIJO}%):** Un plazo fijo te dejaría **${ganancia_pf:,.2f}** al mes, pero acordate de que **te congela la plata por 30 días**. ¡Las billeteras de abajo te pagan rindiendo día a día con tu plata libre!")
 
-# 6. Renderizar el Podio Visual y Ranking
+# 5. Renderizar el Podio Visual y Ranking
 st.write("### 🏆 Ranking de Cuentas Remuneradas")
 
 texto_compartir = f"💸 *RANKING DE RENDIMIENTOS HOY EN ARGENTINA*\nSimulación para: ${monto:,.2f}\n\n"
@@ -138,9 +121,26 @@ for puesto, b in enumerate(ranking_ordenado, 1):
         </div>
         """, unsafe_allow_html=True)
 
+# =========================================================================
+# 🔥 NUEVA UBICACIÓN: BLOQUE PUBLICITARIO DE BINGX (Abajo del ranking)
+# =========================================================================
+st.markdown(f"""
+<div class="sponsor-card">
+    <h3 style="color: #0369a1; margin-top:0;">🚀 ¿Querés rendimientos más altos?</h3>
+    <p style="color: #1e293b; font-size: 16px;">Mientras los pesos pierden valor, podés generar rendimientos en dólares digitales. Create una cuenta en <b>BingX</b> y empezá a operar.</p>
+    <p style="color: #0284c7; font-weight: bold; font-size: 18px;">🎁 ¡Aprovechá el bono de bienvenida de 10 USDT de esta semana!</p>
+    <a href="{LINK_INVITACION_BINGX}" target="_blank" style="text-decoration:none;">
+        <button style="background-color: #0284c7; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size:16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            Crear Cuenta en BingX ↗
+        </button>
+    </a>
+</div>
+""", unsafe_allow_html=True)
+# =========================================================================
+
 texto_compartir += f"Calculá tus ahorros gratis en: fintech-arg-viwdwylf8ioykfdixxtcal.streamlit.app"
 
-# 7. Herramientas de Viralidad
+# 6. Herramientas de Viralidad
 st.write("---")
 st.write("### 📢 ¡Compartí el dato con tu familia o amigos!")
 st.write("Tocá el botón de abajo para copiar un resumen listo para pegar en tus grupos de WhatsApp:")
@@ -148,7 +148,7 @@ st.write("Tocá el botón de abajo para copiar un resumen listo para pegar en tu
 st.code(texto_compartir, language="text")
 st.caption("💡 Mantené presionado o dale doble clic al cuadro gris de arriba para copiarlo al instante.")
 
-# 8. Captura de Emails
+# 7. Captura de Emails
 st.write("---")
 st.write("### 🔔 Que no se te escapen las subas de tasas")
 email = st.text_input("Dejá tu correo electrónico y te mandamos una alerta automática apenas una billetera aumente sus ganancias:")
